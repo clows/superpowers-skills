@@ -31,22 +31,22 @@ The skills wiki needs regular maintenance to stay healthy: links break, skills g
 
 ```bash
 # Run all checks
-~/.claude/skills/meta/gardening-skills-wiki/garden.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/garden.js
 
-# Or run specific checks
-~/.claude/skills/meta/gardening-skills-wiki/check-links.sh
-~/.claude/skills/meta/gardening-skills-wiki/check-naming.sh
-~/.claude/skills/meta/gardening-skills-wiki/check-index-coverage.sh
+# Or run specific checks (when ported)
+node ~/.claude/skills/meta/gardening-skills-wiki/check-links.js
+node ~/.claude/skills/meta/gardening-skills-wiki/check-naming.js
+node ~/.claude/skills/meta/gardening-skills-wiki/check-index-coverage.js
 
-# Analyze search gaps (what skills are missing)
-~/.claude/skills/meta/gardening-skills-wiki/analyze-search-gaps.sh
+# Analyze search gaps (when ported)
+node ~/.claude/skills/meta/gardening-skills-wiki/analyze-search-gaps.js
 ```
 
 The master script runs all checks and provides a health report.
 
 ## What Gets Checked
 
-### 1. Link Validation (`check-links.sh`)
+### 1. Link Validation (`check-links.js`)
 
 **Checks:**
 - Backtick-wrapped `@` links - backticks disable resolution
@@ -62,7 +62,7 @@ The master script runs all checks and provides a health report.
 - Add orphaned skills to their category INDEX
 - Remove references to deleted skills
 
-### 2. Naming Consistency (`check-naming.sh`)
+### 2. Naming Consistency (`check-naming.js`)
 
 **Checks:**
 - Directory names are kebab-case
@@ -77,7 +77,7 @@ The master script runs all checks and provides a health report.
 - Remove empty directories
 - Rephrase names to active voice
 
-### 3. INDEX Coverage (`check-index-coverage.sh`)
+### 3. INDEX Coverage (`check-index-coverage.js`)
 
 **Checks:**
 - All skills listed in their category INDEX
@@ -222,7 +222,7 @@ vim ~/.claude/skills/category/new-skill/SKILL.md
 vim ~/.claude/skills/category/INDEX.md
 
 # 3. Run health check
-~/.claude/skills/meta/gardening-skills-wiki/garden.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/garden.js
 
 # 4. Fix any issues reported
 ```
@@ -237,7 +237,7 @@ mv ~/.claude/skills/old-category/skill ~/.claude/skills/new-category/
 grep -r "skills/gardening-skills-wiki/old-category/skill" ~/.claude/skills/
 
 # 3. Run health check
-~/.claude/skills/meta/gardening-skills-wiki/garden.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/garden.js
 
 # 4. Fix broken links
 ```
@@ -246,7 +246,7 @@ grep -r "skills/gardening-skills-wiki/old-category/skill" ~/.claude/skills/
 
 ```bash
 # Monthly: Run full health check
-~/.claude/skills/meta/gardening-skills-wiki/garden.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/garden.js
 
 # Review and fix:
 # - ❌ errors (broken links, missing skills)
@@ -255,16 +255,16 @@ grep -r "skills/gardening-skills-wiki/old-category/skill" ~/.claude/skills/
 
 ## The Scripts
 
-### `garden.sh` (Master)
+### `garden.js` (Master)
 
 Runs all health checks and provides comprehensive report.
 
 **Usage:**
 ```bash
-~/.claude/skills/meta/gardening-skills-wiki/garden.sh [skills_dir]
+node ~/.claude/skills/meta/gardening-skills-wiki/garden.js [skills_dir]
 ```
 
-### `check-links.sh`
+### `check-links.js`
 
 Validates all `@` references and cross-links.
 
@@ -275,7 +275,7 @@ Validates all `@` references and cross-links.
 - Skills in INDEX files exist
 - Orphaned skills detection
 
-### `check-naming.sh`
+### `check-naming.js`
 
 Validates naming conventions and frontmatter.
 
@@ -284,7 +284,7 @@ Validates naming conventions and frontmatter.
 - Frontmatter completeness
 - Empty directories
 
-### `check-index-coverage.sh`
+### `check-index-coverage.js`
 
 Validates INDEX completeness.
 
@@ -297,14 +297,14 @@ Validates INDEX completeness.
 
 | Issue | Script | Fix |
 |-------|--------|-----|
-| Backtick-wrapped links | `check-links.sh` | Remove backticks from `@` refs |
-| Relative paths | `check-links.sh` | Convert to `skills/` absolute |
-| Broken links | `check-links.sh` | Update `@` references |
-| Orphaned skills | `check-links.sh` | Add to INDEX |
-| Naming issues | `check-naming.sh` | Rename directories |
-| Empty dirs | `check-naming.sh` | Remove with `rm -rf` |
-| Missing from INDEX | `check-index-coverage.sh` | Add to INDEX.md |
-| No description | `check-index-coverage.sh` | Add to INDEX entry |
+| Backtick-wrapped links | `check-links.js` | Remove backticks from `@` refs |
+| Relative paths | `check-links.js` | Convert to `skills/` absolute |
+| Broken links | `check-links.js` | Update `@` references |
+| Orphaned skills | `check-links.js` | Add to INDEX |
+| Naming issues | `check-naming.js` | Rename directories |
+| Empty dirs | `check-naming.js` | Remove with `rm -rf` |
+| Missing from INDEX | `check-index-coverage.js` | Add to INDEX.md |
+| No description | `check-index-coverage.js` | Add to INDEX entry |
 
 ## Output Symbols
 
@@ -318,7 +318,7 @@ Validates INDEX completeness.
 **Before committing skill changes:**
 
 ```bash
-~/.claude/skills/meta/gardening-skills-wiki/garden.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/garden.js
 # Fix all ❌ errors
 # Consider fixing ⚠️  warnings
 git add .
@@ -328,13 +328,13 @@ git commit -m "Add/update skills"
 **When links feel suspicious:**
 
 ```bash
-~/.claude/skills/meta/gardening-skills-wiki/check-links.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/check-links.js
 ```
 
 **When INDEX seems incomplete:**
 
 ```bash
-~/.claude/skills/meta/gardening-skills-wiki/check-index-coverage.sh
+node ~/.claude/skills/meta/gardening-skills-wiki/check-index-coverage.js
 ```
 
 ## Common Rationalizations
@@ -365,6 +365,6 @@ git commit -m "Add/update skills"
 
 **Don't manually inspect - automate the checks.**
 
-Run `garden.sh` after changes and periodically. Fix ❌ errors immediately, address ⚠️  warnings when convenient.
+Run `garden.js` after changes and periodically. Fix ❌ errors immediately, address ⚠️  warnings when convenient.
 
 Maintained wiki = findable skills = reusable knowledge.

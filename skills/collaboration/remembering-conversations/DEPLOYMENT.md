@@ -295,7 +295,7 @@ cp ~/.config/superpowers/conversation-index/db.sqlite ~/.config/superpowers/conv
         ├── index-conversations    # Main indexer
         ├── search-conversations   # Search interface
         ├── install-hook           # Hook installer
-        ├── test-deployment.sh     # End-to-end tests
+        ├── test-deployment.js     # End-to-end tests
         ├── src/                   # TypeScript source
         └── prompts/
             └── search-agent.md    # Subagent template
@@ -324,6 +324,6 @@ cp ~/.config/superpowers/conversation-index/db.sqlite ~/.config/superpowers/conv
 - [ ] Monitor: Check hook runs (summaries appear for new conversations)
 
 ### Testing
-- [ ] Run end-to-end tests: `./test-deployment.sh`
+- [ ] Run end-to-end tests: `node test-deployment.js`
 - [ ] All 5 scenarios pass
 - [ ] Manual subagent test (see scenario 5 in test output)

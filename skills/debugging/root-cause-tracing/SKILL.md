@@ -106,10 +106,10 @@ npm test 2>&1 | grep 'DEBUG git init'
 
 If something appears during tests but you don't know which test:
 
-Use the bisection script: @find-polluter.sh
+Use the bisection script: @find-polluter.js
 
 ```bash
-./find-polluter.sh '.git' 'src/**/*.test.ts'
+node find-polluter.js '.git' 'src/**/*.test.ts'
 ```
 
 Runs tests one-by-one, stops at first polluter. See script for usage.
