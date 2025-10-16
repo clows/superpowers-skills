@@ -1,0 +1,31 @@
+{
+  "name": "superpowers-skills",
+  "version": "1.0.0",
+  "description": "Community-editable skills for Claude Code's superpowers plugin",
+  "type": "module",
+  "author": {
+    "name": "Jesse Vincent",
+    "email": "jesse@fsck.com"
+  },
+  "homepage": "https://github.com/obra/superpowers-skills",
+  "repository": "https://github.com/obra/superpowers-skills",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "skills"
+  ],
+  "dependencies": {
+    "glob": "^10.3.10",
+    "cross-spawn": "^7.0.3",
+    "chalk": "^5.3.0",
+    "prompts": "^2.4.2",
+    "fs-extra": "^11.2.0"
+  },
+  "bin": {
+    "find-skills": "./skills/using-skills/find-skills.js",
+    "skill-run": "./skills/using-skills/skill-run.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
