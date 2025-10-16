@@ -6,8 +6,10 @@ import path from 'path';
  *
  * Precedence:
  * 1. PERSONAL_SUPERPOWERS_DIR env var (if set)
- * 2. XDG_CONFIG_HOME/superpowers (if XDG_CONFIG_HOME is set)
- * 3. ~/.config/superpowers (default)
+ * 2. XDG_CONFIG_HOME/superpowers (if XDG_CONFIG_HOME is set on Unix)
+ * 3. Platform-specific defaults:
+ *    - Windows: %LOCALAPPDATA%\superpowers
+ *    - Mac/Linux: ~/.config/superpowers
  */
 export function getSuperpowersDir(): string {
   if (process.env.PERSONAL_SUPERPOWERS_DIR) {
@@ -19,6 +21,14 @@ export function getSuperpowersDir(): string {
     return path.join(xdgConfigHome, 'superpowers');
   }
 
+  // Platform-specific default paths
+  if (process.platform === 'win32') {
+    // Windows: Use %LOCALAPPDATA% (typically C:\Users\username\AppData\Local)
+    const localAppData = process.env.LOCALAPPDATA || path.join(os.homedir(), 'AppData', 'Local');
+    return path.join(localAppData, 'superpowers');
+  }
+
+  // Unix-like systems (Linux, macOS): Use ~/.config
   return path.join(os.homedir(), '.config', 'superpowers');
 }
 
